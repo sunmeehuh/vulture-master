@@ -2,6 +2,8 @@
 
 var vultureServices = angular.module('vultureServices', ['ngResource']);
 
+// not sure what this does because ":city.json" is not a file
+// I probably just need to look up that syntax
 vultureServices.factory('Destination', ['$resource', '$rootScope',
   function($resource, $rootScope) {
     return $resource('cities/:city.json', {}, {
@@ -9,6 +11,7 @@ vultureServices.factory('Destination', ['$resource', '$rootScope',
     });
   }]);
 
+// returns an object represented by the file "city-codes.json"
 vultureServices.factory('CityCode', ['$resource',
   function($resource) {
     return $resource('cities/city-codes.json', {}, {
@@ -16,6 +19,7 @@ vultureServices.factory('CityCode', ['$resource',
     });
   }]);
 
+// same
 vultureServices.factory('CityAndAirportCode', ['$resource',
   function($resource) {
     return $resource('cities/city-airport-codes.json', {}, {
@@ -23,6 +27,7 @@ vultureServices.factory('CityAndAirportCode', ['$resource',
     });
   }]);
 
+//same
 vultureServices.factory('apiKey', ['$resource',
   function($resource){
     return $resource('api-key.json',{
@@ -30,6 +35,7 @@ vultureServices.factory('apiKey', ['$resource',
     });
   }]);
 
+// this is a weird function, not sure what it does
 vultureServices.factory('test', [
   function(){
     var testArr = [];
@@ -52,6 +58,8 @@ vultureServices.factory('Flights', [ '$http', '$rootScope',
 
     var responsePackage = [];
 
+    // for each item in "flightRequests", make a call to getFlightData (which makes a POST request)
+    // and store the result in "responsePackage"
     function fetchFlights(flightRequests){
 
       responsePackage = [];
@@ -71,10 +79,14 @@ vultureServices.factory('Flights', [ '$http', '$rootScope',
       // END UNCOMMENTING HERE -----------------------------
     }
 
+    // return the end result
     function get (){
       return responsePackage;
     }
 
+    // called by fetchFlights as a utility
+    // makes a post request to the url passed as a parameter and promises the result
+    // this is a weird way to do this. why not just use $http?
     function getFlightData(url, index, requestArray) {
       return new Promise(function(resolve, reject){
         var req = new XMLHttpRequest();
@@ -85,8 +97,7 @@ vultureServices.factory('Flights', [ '$http', '$rootScope',
         req.onload = function() {
           if(req.status == 200) {
             resolve(req.response);
-          }
-          else {
+          } else {
             reject(Error(req.statusText));
           }
         };
@@ -104,6 +115,8 @@ vultureServices.factory('Flights', [ '$http', '$rootScope',
     }
 
   }]);
+
+/* this looks like it's being used as a reference for the programmer */
 
 // 'POST', 'https://www.googleapis.com/qpxExpress/v1/trips/search&key={API_KEY}'
 

@@ -2,6 +2,10 @@
 
 var vultureControllers = angular.module('vultureControllers', ['ngResource']);
 
+
+/*
+ * Search Controller
+ */
 vultureControllers.controller('searchCtlr', ['$scope', '$rootScope', '$resource', '$http', '$location', '$routeParams', 'Destination', 'CityCode', 'Flights',
   function($scope, $rootScope, $resource, $http, $location, $routeParams, Destination, CityCode, Flights) {
 
@@ -53,6 +57,9 @@ vultureControllers.controller('searchCtlr', ['$scope', '$rootScope', '$resource'
 
   }]);
 
+/*
+ * Results Controller
+ */
 vultureControllers.controller('resultsCtlr', ['$scope', '$rootScope', '$routeParams', 'Destination', 'CityCode', 'Flights',
   function($scope, $rootScope, $routeParams, Destination, CityCode, Flights){
 
@@ -259,6 +266,9 @@ vultureControllers.controller('resultsCtlr', ['$scope', '$rootScope', '$routePar
     }
   }]);
 
+/*
+ * Test Controller
+ */
 vultureControllers.controller('testCtlr', ['$scope', '$rootScope', '$routeParams', 'Destination', 'CityCode', 'Flights',
   function($scope, $rootScope, $routeParams, Destination, CityCode, Flights){
 
