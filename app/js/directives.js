@@ -1,17 +1,18 @@
 'use strict';
 var vultureDirectives = angular.module('vultureDirectives', []);
-
+// binded to the submit button at bottom of search.html
 vultureDirectives.directive('searchFormSubmitter', ['$document', 'Flights',
   function($document, Flights) {
     return function(scope, element, attr) {
 
       // scope.inputData = [];
 
-
+      // fires once the submit button is clicked -> collects the data and parses through it
       element.on('click', function(event){
         // console.log('are cities present?: ', scope.cities);
         event.preventDefault();
         // console.log('directive working');
+        // get the input data
         collectInputData(scope.inputs);
         // console.log(scope.inputData);
         for(var city in scope.cities){
@@ -28,17 +29,20 @@ vultureDirectives.directive('searchFormSubmitter', ['$document', 'Flights',
 
       function collectInputData(arrayOfInputs){
         for(var i = 0; i < arrayOfInputs.length; i++){
+          // first check if any of the elements has child elements -> if so, first collect the data in that
           if(arrayOfInputs[i].hasChildNodes()){
             collectInputData(arrayOfInputs[i].children);
           }
           // console.log(arrayOfInputs[i]);
           if(arrayOfInputs[i].tagName == 'INPUT'){
+            // stringfies any element that has data in their tag
             var jsonString = JSON.stringify(arrayOfInputs[i].dataset),
                 inputObject = JSON.parse(jsonString),
-                keys = Object.keys(inputObject);
+                keys = Object.keys(inputObject); //gets the keys from inputObject
                 length = objLength(inputObject);
             if(length > 1){
               for(var k = 0; k < length; k++){
+                // set the keys in scope to be the same as the keys in inputObject
                 scope.inputData[keys[k]] = inputObject[keys[k]];
               }
             }
@@ -62,7 +66,7 @@ vultureDirectives.directive('searchFormSubmitter', ['$document', 'Flights',
             p = r.passengers = {};
             r.solutions = 1;
             r.refundable = false;
-
+        //this block confuses me -> both conditions will always happen, no?
         for(var l = 0; l < legs.length; l++){
           var leg = s[l] = {};
           if(legs[l] == 'outbound'){
@@ -107,7 +111,7 @@ vultureDirectives.directive('searchFormSubmitter', ['$document', 'Flights',
 
     };
 }]);
-
+// fake it till you make it, I think -> what's the purpose of this block? to test the form?
 vultureDirectives.directive('mockFormSubmitter', ['$document', 'Flights',
   function($document, Flights) {
     return function(scope, element, attr) {
